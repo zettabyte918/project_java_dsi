@@ -15,9 +15,6 @@ public class ProfileController implements Initializable {
     @FXML
     private Label usernameL;
 
-    private String username;
-    private String role;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Initialize the labels with the values of username and role

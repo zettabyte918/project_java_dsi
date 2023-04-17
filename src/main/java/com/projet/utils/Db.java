@@ -5,29 +5,29 @@ import java.sql.*;
 
 public class Db {
     // Set up database connection parameters
-    private String dbName = "app";
-    private String url = "jdbc:mysql://localhost:3306/" + dbName;
-    private String username = "hossem";
-    private String password = "Hossem@@@147";
+    private String dbName = ConfigManager.getDbName();
+    private String url = ConfigManager.getDbUrl();
+    private String username = ConfigManager.getDbUsername();
+    private String password = ConfigManager.getDbPassword();
 
-    public Response TestConnection() {
+    public TestDBResponse TestConnection() {
 
         try {
             // Create a database connection
-            Connection connection = DriverManager.getConnection(url, username, password);
+            Connection connection = DriverManager.getConnection(url + dbName, username, password);
 
             // Check if the connection is valid
             if (connection.isValid(5)) { // 5 seconds timeout
                 connection.close();
-                return new Response(1, "Connected successfully to " + username + ":" + dbName);
+                return new TestDBResponse(1, "Connected successfully to " + username + ":" + dbName);
             } else {
-                return new Response(0, "Failed to connect to the database to: " + dbName);
+                return new TestDBResponse(0, "Failed to connect to the database to: " + dbName);
 
             }
 
             // Close the connection
         } catch (SQLException e) {
-            return new Response(0, "Failed to connect to the database name: " + dbName);
+            return new TestDBResponse(0, "Failed to connect to the database name: " + dbName);
         }
     }
 }

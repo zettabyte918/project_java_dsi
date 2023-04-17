@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 import com.projet.utils.Db;
-import com.projet.utils.Response;
+import com.projet.utils.TestDBResponse;
 import com.projet.utils.Utils;
 
 /**
@@ -19,7 +19,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         // test database if ok otherwise show alert
 
-        Response res = new Db().TestConnection();
+        TestDBResponse res = new Db().TestConnection();
 
         if (res.getStatus() == 0) {
             this.showAlert(res.getMessage());

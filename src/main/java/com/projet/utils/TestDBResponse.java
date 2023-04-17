@@ -1,10 +1,10 @@
 package com.projet.utils;
 
-public class Response {
+public class TestDBResponse {
     private int status;
     private String message;
 
-    public Response(int status, String message) {
+    public TestDBResponse(int status, String message) {
         this.status = status;
         this.message = message;
     }
