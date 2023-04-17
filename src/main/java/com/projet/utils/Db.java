@@ -19,7 +19,7 @@ public class Db {
             // Check if the connection is valid
             if (connection.isValid(5)) { // 5 seconds timeout
                 connection.close();
-                return new Response(1, "Connected succesfully to " + username + ":" + dbName);
+                return new Response(1, "Connected successfully to " + username + ":" + dbName);
             } else {
                 return new Response(0, "Failed to connect to the database to: " + dbName);
 
