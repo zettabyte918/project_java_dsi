@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import com.projet.utils.Db;
 import com.projet.utils.TestDBResponse;
-import com.projet.utils.Utils;
+import com.projet.utils.Router;
 
 /**
  * JavaFX App
@@ -24,7 +24,7 @@ public class App extends Application {
         if (res.getStatus() == 0) {
             this.showAlert(res.getMessage());
         } else {
-            Utils.navigateTo(stage, "login");
+            Router.navigateTo(stage, "login");
         }
     }
 

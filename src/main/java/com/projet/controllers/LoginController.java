@@ -2,7 +2,7 @@ package com.projet.controllers;
 
 import java.util.Optional;
 
-import com.projet.utils.Utils;
+import com.projet.utils.Router;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -37,7 +37,7 @@ public class LoginController {
             boolean isSuccess = this.showDialog(currentStage, "27515642");
 
             if (isSuccess) {
-                ProfileController profileController = Utils.navigateTo(currentStage, "profile");
+                ProfileController profileController = Router.navigateTo(currentStage, "profile");
 
                 // Set the values of username and role in the ProfileController
                 profileController.setUser("john", "Adminn"); // Example username value

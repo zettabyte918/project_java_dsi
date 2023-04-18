@@ -7,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Utils {
+public class Router {
 
     public static <T> T navigateTo(Stage primaryStage, String page) {
         try {
