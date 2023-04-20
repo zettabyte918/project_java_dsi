@@ -15,8 +15,13 @@ def load_config(filename):
 
 def connect_mysql(username, password, dbname):
     """Try to connect to MySQL and check the exit status"""
-    cmd = f'mysql -u {username} -p{password} {dbname} -e "SELECT 1" >/dev/null 2>&1'
-    return subprocess.run(cmd, shell=True, stderr=subprocess.DEVNULL).returncode == 0
+    cmd = f'mysql -u {username} -p{password} {dbname} -e "SELECT 1"'
+    return (
+        subprocess.run(
+            cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+        ).returncode
+        == 0
+    )
 
 
 def execute_query(username, password, dbname, query):
