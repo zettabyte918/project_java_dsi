@@ -66,4 +66,4 @@ if __name__ == "__main__":
             process_reminder(id, title, name, tel)
 
     else:
-        print("Failed to connect to MySQL database")
+        print(f"Failed to connect to {dbname} database")
