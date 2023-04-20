@@ -46,7 +46,10 @@ def process_reminder(id, title, name, tel):
 
 if __name__ == "__main__":
     # Load MySQL credentials from config.properties
-    username, password, dbname = load_config("config.properties")
+
+    username, password, dbname = load_config(
+        "src/main/resources/com/projet/config.properties"
+    )
 
     if connect_mysql(username, password, dbname):
         print(
@@ -72,3 +75,19 @@ if __name__ == "__main__":
 
     else:
         print(f"Failed to connect to {dbname} database")
+
+# try {
+#             ProcessBuilder pb = new ProcessBuilder("python3", "src/main/resources/com/projet/script.py");
+#             pb.inheritIO();
+#             Process process = pb.start();
+#             int exitCode = process.waitFor();
+#             if (exitCode == 0) {
+#                 System.out.println("Python script executed successfully.");
+#             } else {
+#                 System.out.println("Error executing Python script.");
+#             }
+#         } catch (IOException e) {
+#             System.out.println("Error executing Python script: " + e.getMessage());
+#         } catch (InterruptedException e) {
+#             System.out.println("Python script execution interrupted: " + e.getMessage());
+#         }
