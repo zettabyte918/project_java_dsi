@@ -43,8 +43,6 @@ public class LoginController {
                 profileController.setUser("john", "Adminn"); // Example username value
             }
 
-            // show dialog
-
         } catch (Exception e) {
             e.printStackTrace();
         }
