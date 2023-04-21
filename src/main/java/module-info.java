@@ -8,4 +8,5 @@ module com.projet {
     opens com.projet.controllers to javafx.graphics, javafx.fxml;
 
     exports com.projet;
+    exports com.projet.models;
 }

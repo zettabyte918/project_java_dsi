@@ -1,6 +1,6 @@
 package com.projet.models;
 
-import java.sql.ResultSet;
+// import java.sql.ResultSet;
 
 public class Reminder {
     private int id;
