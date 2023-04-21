@@ -24,13 +24,11 @@ public class LoginController {
     @FXML
     void Login(ActionEvent event) {
         try {
-            // Close current login window
+            // current login window
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             // try to login the user if success show 2fa
-
             User currentUser = User.Login(this.username.getText(), this.password.getText());
-            // boolean isSuccess = this.showDialog(currentStage, "27515642");
 
             if (currentUser != null) {
                 this.showAlert("Login success", "Hello " + currentUser.getUsername() + " welcome back!",
@@ -40,8 +38,12 @@ public class LoginController {
                 AppState.getInstance().setLoggedIn(true);
                 AppState.getInstance().setUser(currentUser);
                 currentUser.setConfirmationCode();
-                System.out.println(currentUser.getConfirmationCode() + " ddd");
-                this.showDialog(currentUser, currentStage, "27515642");
+                System.out.println(currentUser.getConfirmationCode() + " confirmation code");
+                if (this.showConfirmationCodeDialog(currentUser, currentStage)) {
+                    System.out.println("correct 2fa");
+                } else {
+                    System.out.println("incorrect 2fa");
+                }
 
             } else {
                 this.showAlert("Login failed!", "password or username not correct", AlertType.ERROR);
@@ -65,7 +67,7 @@ public class LoginController {
         alert.showAndWait();
     }
 
-    public boolean showDialog(User user, Stage currentStage, String tel) {
+    public boolean showConfirmationCodeDialog(User user, Stage currentStage) {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Welcome back " + user.getUsername());
         dialog.setHeaderText("Enter your confirmation code for " + user.getTel() + ":");
@@ -73,8 +75,12 @@ public class LoginController {
 
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
-            String name = result.get();
-            if (name.equals("123456")) {
+            String userCode = result.get();
+
+            // get confirmation code from the user database
+            String confirmation_code = user.getConfirmationCode();
+
+            if (userCode.equals(confirmation_code)) {
                 currentStage.close();
                 return true;
             } else {
