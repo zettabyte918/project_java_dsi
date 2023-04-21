@@ -18,7 +18,7 @@ import com.projet.utils.Router;
 public class App extends Application {
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, SQLException {
         // start background worker
         // this.startWorkers(stage);
 
@@ -27,6 +27,8 @@ public class App extends Application {
 
         if (res.getStatus() == 0) {
             this.showAlert(res.getMessage());
+            Database.getInstance().getDBConnection().close();
+
         } else {
             Router.navigateTo(stage, "login");
         }

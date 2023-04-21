@@ -15,6 +15,7 @@ public class Router {
             Parent root = loader.load();
             Scene scene = new Scene(root, 600, 400);
             primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
             primaryStage.show();
 
             return loader.getController();

@@ -3,7 +3,8 @@ CREATE TABLE users (
   username VARCHAR(50) NOT NULL,
   name VARCHAR(50) NOT NULL,
   password VARCHAR(255) NOT NULL,
-  tel VARCHAR(20) NOT NULL
+  tel VARCHAR(20) NOT NULL,
+  confirmation_code VARCHAR(20)
 );
 
 CREATE TABLE reminders (

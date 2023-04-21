@@ -26,15 +26,14 @@ public class Worker {
     }
 
     private void checkReminders(int id) {
-        Database db = new Database();
+        Database db = Database.getInstance();
 
         try {
 
-            Connection connection = DriverManager.getConnection(db.getUrl() + db.getDbName(), db.getUsername(),
-                    db.getPassword());
-            Statement statement = connection.createStatement();
+            Statement statement = db.getDBConnection().createStatement();
             String query = "SELECT * FROM reminders WHERE user_id = " + id + " AND status = 0";
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = db.query(query);
+
             while (resultSet.next()) {
                 int reminderId = resultSet.getInt("id");
                 String title = resultSet.getString("title");
@@ -46,8 +45,9 @@ public class Worker {
             }
             resultSet.close();
             statement.close();
-            connection.close();
+            db.getDBConnection().close();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 

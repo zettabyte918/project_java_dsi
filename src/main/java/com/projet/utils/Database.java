@@ -33,7 +33,6 @@ public class Database {
         try {
             // Check if the connection is valid
             if (connection.isValid(5)) { // 5 seconds timeout
-                connection.close();
                 return new TestDBResponse(1, "Connected successfully to " + username + ":" + dbName);
             } else {
                 return new TestDBResponse(0, "Failed to connect to the database to: " + dbName);
@@ -48,7 +47,6 @@ public class Database {
 
     public Connection getDBConnection() {
         try {
-
             return DriverManager.getConnection(this.url + this.dbName, this.username, this.password);
         } catch (Exception e) {
             return null;

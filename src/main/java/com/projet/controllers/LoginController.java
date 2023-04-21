@@ -2,21 +2,19 @@ package com.projet.controllers;
 
 import java.util.Optional;
 
-import com.projet.utils.Router;
+import com.projet.AppState;
+import com.projet.models.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
 public class LoginController {
-
-    @FXML
-    private Button btn_login;
 
     @FXML
     private TextField password;
@@ -27,44 +25,51 @@ public class LoginController {
     @FXML
     void Login(ActionEvent event) {
         try {
-            // Close current window
+            // Close current login window
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // Load profile.fxml and create new window
-            // FXMLLoader loader = new
-            // FXMLLoader(getClass().getResource("/application/views/profile.fxml"));
-            // Parent root = loader.load();
-            boolean isSuccess = this.showDialog(currentStage, "27515642");
+            // try to login the user if success show 2fa
 
-            if (isSuccess) {
-                ProfileController profileController = Router.navigateTo(currentStage, "profile");
+            User currentUser = User.Login(this.username.getText(), this.password.getText());
+            // boolean isSuccess = this.showDialog(currentStage, "27515642");
 
-                // Set the values of username and role in the ProfileController
-                profileController.setUser("john", "Adminn"); // Example username value
+            if (currentUser != null) {
+                this.showAlert("Login success", "Hello " + currentUser.getUsername() + " welcome back!",
+                        AlertType.INFORMATION);
+
+                // add current user to the global state
+                AppState.getInstance().setLoggedIn(true);
+                AppState.getInstance().setUser(currentUser);
+                currentUser.setConfirmationCode();
+                System.out.println(currentUser.getConfirmationCode() + " ddd");
+                this.showDialog(currentUser, currentStage, "27515642");
+
+            } else {
+                this.showAlert("Login failed!", "password or username not correct", AlertType.ERROR);
             }
+
+            // ProfileController profileController = Router.navigateTo(currentStage,
+            // "profile");
+            // // Set the values of username and role in the ProfileController
+            // profileController.setUser("john", "Adminn"); // Example username value
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void showAlert() {
-        Alert alert = new Alert(Alert.AlertType.ERROR, "Invalide code provided", ButtonType.OK,
-                ButtonType.CANCEL);
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            System.out.println("yes");
-
-        } else {
-            System.out.println("no");
-        }
-
+    public void showAlert(String title, String message, AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(title);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
-    public boolean showDialog(Stage currentStage, String tel) {
+    public boolean showDialog(User user, Stage currentStage, String tel) {
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Input Dialog");
-        dialog.setHeaderText("Enter your confirmation code for " + tel + ":");
+        dialog.setTitle("Welcome back " + user.getUsername());
+        dialog.setHeaderText("Enter your confirmation code for " + user.getTel() + ":");
         dialog.setContentText("Code:");
 
         Optional<String> result = dialog.showAndWait();
@@ -74,7 +79,6 @@ public class LoginController {
                 currentStage.close();
                 return true;
             } else {
-                this.showAlert();
                 return false;
             }
 

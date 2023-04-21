@@ -1,8 +1,10 @@
 package com.projet;
 
+import com.projet.models.User;
+
 public class AppState {
     private static AppState instance;
-    private int userId;
+    private User user;
     private boolean loggedIn;
 
     private AppState() {
@@ -16,12 +18,12 @@ public class AppState {
         return instance;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public boolean isLoggedIn() {
