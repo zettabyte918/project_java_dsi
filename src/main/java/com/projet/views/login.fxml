@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projet.controllers.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projet.controllers.LoginController">
    <left>
       <VBox alignment="CENTER" prefHeight="400.0" prefWidth="273.0" style="-fx-background-color: #DCF7FC;" BorderPane.alignment="CENTER">
          <children>
@@ -42,7 +42,7 @@
                   <Image url="@images/robot.png" />
                </image>
             </ImageView>
-            <Button alignment="CENTER" layoutX="73.0" layoutY="340.0" mnemonicParsing="false" prefWidth="181.0" styleClass="info" text="Register with us" />
+            <Button alignment="CENTER" layoutX="73.0" layoutY="340.0" mnemonicParsing="false" onAction="#Register" prefWidth="181.0" styleClass="info" text="Register with us" />
             <FontAwesomeIcon fill="WHITE" glyphName="PLUS" layoutX="229.0" layoutY="360.0" />
             <Label layoutX="157.0" layoutY="307.0" text="or" textFill="#797875" />
          </children>

@@ -16,50 +16,23 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
-public class LoginController {
-
-    @FXML
-    private TextField password;
-
+public class RegisterController {
     @FXML
     private TextField username;
 
-    // for register
     @FXML
     private TextField tel;
+
+    @FXML
+    private TextField password;
 
     @FXML
     void Login(ActionEvent event) {
         try {
             // current login window
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            // try to login the user if success show 2fa
-            User currentUser = User.Login(this.username.getText(), this.password.getText());
-
-            if (currentUser != null) {
-                this.showAlert("Login success", "Hello " + currentUser.getUsername() + " welcome back!",
-                        AlertType.INFORMATION);
-
-                // add current user to the global state
-                AppState.getInstance().setLoggedIn(true);
-                AppState.getInstance().setUser(currentUser);
-                currentUser.setConfirmationCode();
-                System.out.println(currentUser.getConfirmationCode() + " confirmation code");
-                if (this.showConfirmationCodeDialog(currentUser, currentStage)) {
-                    System.out.println("correct 2fa");
-                } else {
-                    System.out.println("incorrect 2fa");
-                }
-
-            } else {
-                this.showAlert("Login failed!", "password or username not correct", AlertType.ERROR);
-            }
-
-            // ProfileController profileController = Router.navigateTo(currentStage,
-            // "profile");
-            // // Set the values of username and role in the ProfileController
-            // profileController.setUser("john", "Adminn"); // Example username value
+            LoginController loginController = Router.navigateTo(currentStage, "login");
+            // currentStage.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,8 +41,7 @@ public class LoginController {
 
     @FXML
     void Register(ActionEvent event) {
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        RegisterController registerController = Router.navigateTo(currentStage, "register");
+        System.out.println("hi from register page");
     }
 
     public void showAlert(String title, String message, AlertType type) {
