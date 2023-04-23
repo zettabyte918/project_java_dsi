@@ -1,11 +1,11 @@
-package com.projet.utils;
+package com.projet.utils.config;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigManager {
-    private static final String CONFIG_FILE = "/com/projet/config.properties";
+    private static final String CONFIG_FILE = "config.properties";
     private static Properties properties;
 
     static {

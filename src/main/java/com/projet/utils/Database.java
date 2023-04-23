@@ -3,6 +3,8 @@ package com.projet.utils;
 // import sql library
 import java.sql.*;
 
+import com.projet.utils.config.ConfigManager;
+
 public class Database {
     // Set up database connection parameters
     private static Database instance;
