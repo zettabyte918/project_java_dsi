@@ -22,14 +22,7 @@ public class User {
         Database db = Database.getInstance();
 
         try {
-            // Check if user already exists
-            String checkQuery = "SELECT COUNT(*) FROM users WHERE username = ?";
-            PreparedStatement checkStmt = db.getDBConnection().prepareStatement(checkQuery);
-            checkStmt.setString(1, username);
-            ResultSet checkRs = checkStmt.executeQuery();
-            checkRs.next();
-            int count = checkRs.getInt(1);
-            if (count > 0) {
+            if (userExists(username)) {
                 // User already exists, return false
                 return false;
             }
@@ -43,6 +36,23 @@ public class User {
             stmt.setString(4, tel);
             int affectedRows = stmt.executeUpdate();
             return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean userExists(String username) {
+        Database db = Database.getInstance();
+
+        try {
+            String query = "SELECT COUNT(*) FROM users WHERE username = ?";
+            PreparedStatement stmt = db.getDBConnection().prepareStatement(query);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            int count = rs.getInt(1);
+            return count > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

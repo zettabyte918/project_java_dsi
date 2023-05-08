@@ -46,7 +46,7 @@ public class RegisterController {
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             // try to login the user if success show 2fa
-            boolean currentUser = User.Register(this.username.getText(), this.tel.getText(), this.password.getText());
+            boolean currentUser = User.Register(this.username.getText(), this.password.getText(), this.tel.getText());
 
             if (currentUser) {
                 this.showAlert("Register success", "Hello " + this.username.getText() + " welcome !",
