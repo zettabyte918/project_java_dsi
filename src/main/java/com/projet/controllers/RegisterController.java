@@ -41,7 +41,32 @@ public class RegisterController {
 
     @FXML
     void Register(ActionEvent event) {
-        System.out.println("hi from register page");
+        try {
+            // current login window
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // try to login the user if success show 2fa
+            boolean currentUser = User.Register(this.username.getText(), this.tel.getText(), this.password.getText());
+
+            if (currentUser) {
+                this.showAlert("Register success", "Hello " + this.username.getText() + " welcome !",
+                        AlertType.INFORMATION);
+
+                // redirect to login page:
+                LoginController loginController = Router.navigateTo(currentStage, "login");
+
+            } else {
+                this.showAlert("Register failed!", "User already exist!", AlertType.ERROR);
+            }
+
+            // ProfileController profileController = Router.navigateTo(currentStage,
+            // "profile");
+            // // Set the values of username and role in the ProfileController
+            // profileController.setUser("john", "Adminn"); // Example username value
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void showAlert(String title, String message, AlertType type) {

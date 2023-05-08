@@ -18,6 +18,37 @@ public class User {
         this.tel = tel;
     }
 
+    public static boolean Register(String username, String password, String tel) {
+        Database db = Database.getInstance();
+
+        try {
+            // Check if user already exists
+            String checkQuery = "SELECT COUNT(*) FROM users WHERE username = ?";
+            PreparedStatement checkStmt = db.getDBConnection().prepareStatement(checkQuery);
+            checkStmt.setString(1, username);
+            ResultSet checkRs = checkStmt.executeQuery();
+            checkRs.next();
+            int count = checkRs.getInt(1);
+            if (count > 0) {
+                // User already exists, return false
+                return false;
+            }
+
+            // User doesn't exist, insert new record
+            String query = "INSERT INTO users (username, name, password, tel) VALUES (?, ? , ?, ?)";
+            PreparedStatement stmt = db.getDBConnection().prepareStatement(query);
+            stmt.setString(1, username);
+            stmt.setString(2, username);
+            stmt.setString(3, password);
+            stmt.setString(4, tel);
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static User Login(String username, String password) {
         Database db = Database.getInstance();
 
