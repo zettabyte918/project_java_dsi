@@ -10,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
@@ -69,7 +68,7 @@ public class LoginController {
     @FXML
     void Register(ActionEvent event) {
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        RegisterController registerController = Router.navigateTo(currentStage, "register");
+        Router.navigateTo(currentStage, "register");
     }
 
     public void showAlert(String title, String message, AlertType type) {

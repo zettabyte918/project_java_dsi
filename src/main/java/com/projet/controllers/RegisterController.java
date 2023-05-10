@@ -2,7 +2,6 @@ package com.projet.controllers;
 
 import java.util.Optional;
 
-import com.projet.AppState;
 import com.projet.models.User;
 import com.projet.utils.Router;
 
@@ -10,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
@@ -31,7 +29,7 @@ public class RegisterController {
         try {
             // current login window
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            LoginController loginController = Router.navigateTo(currentStage, "login");
+            Router.navigateTo(currentStage, "login");
             // currentStage.close();
 
         } catch (Exception e) {
@@ -53,7 +51,7 @@ public class RegisterController {
                         AlertType.INFORMATION);
 
                 // redirect to login page:
-                LoginController loginController = Router.navigateTo(currentStage, "login");
+                Router.navigateTo(currentStage, "login");
 
             } else {
                 this.showAlert("Register failed!", "User already exist!", AlertType.ERROR);

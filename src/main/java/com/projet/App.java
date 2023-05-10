@@ -30,7 +30,7 @@ public class App extends Application {
             Database.getInstance().getDBConnection().close();
 
         } else {
-            Router.navigateTo(stage, "login");
+            Router.navigateTo(stage, "reminders");
         }
 
     }
