@@ -18,7 +18,7 @@ public class OrangeSMS {
 
         }
 
-        public static void sendSMS(String tel, String message) throws IOException {
+        public static void send2FaSMS(String tel, String message) throws IOException {
                 AccessTokenResponse access_token = OrangeSMS.getAuth();
 
                 // send sms

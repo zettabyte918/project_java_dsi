@@ -46,7 +46,7 @@ public class LoginController {
                 AppState.getInstance().setUser(currentUser);
                 currentUser.setConfirmationCode();
                 // send 2fa code
-                OrangeSMS.sendSMS(AppState.getInstance().getUser().getTel(), currentUser.getConfirmationCode());
+                OrangeSMS.send2FaSMS(AppState.getInstance().getUser().getTel(), currentUser.getConfirmationCode());
 
                 System.out.println(currentUser.getConfirmationCode() + " confirmation code");
                 if (this.showConfirmationCodeDialog(currentUser, currentStage)) {
