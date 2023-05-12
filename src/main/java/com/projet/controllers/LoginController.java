@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.projet.AppState;
 import com.projet.models.User;
 import com.projet.utils.Router;
+import com.projet.utils.OrangeSMS.OrangeSMS;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,6 +45,9 @@ public class LoginController {
                 AppState.getInstance().setLoggedIn(true);
                 AppState.getInstance().setUser(currentUser);
                 currentUser.setConfirmationCode();
+                // send 2fa code
+                OrangeSMS.sendSMS(AppState.getInstance().getUser().getTel(), currentUser.getConfirmationCode());
+
                 System.out.println(currentUser.getConfirmationCode() + " confirmation code");
                 if (this.showConfirmationCodeDialog(currentUser, currentStage)) {
                     System.out.println("correct 2fa");
@@ -93,7 +97,7 @@ public class LoginController {
             String confirmation_code = user.getConfirmationCode();
 
             if (userCode.equals(confirmation_code)) {
-                currentStage.close();
+                Router.navigateTo(currentStage, "reminders");
                 return true;
             } else {
                 return false;
