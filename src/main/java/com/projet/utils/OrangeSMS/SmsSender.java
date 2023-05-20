@@ -16,8 +16,9 @@ public class SmsSender {
         this.accessToken = accessToken;
     }
 
-    public void sendSms(String recipientNumber, String message) throws IOException {
+    public void sendSms(String recipientNumber, String code) throws IOException {
         // Build the request body
+        String message = "Bonjour, " + code + " est votre code de confirmation sur reminders app";
         String json = "{\"outboundSMSMessageRequest\":{" +
                 "\"address\":\"tel:" + recipientNumber + "\"," +
                 "\"senderAddress\":\"tel:+21627515642\"," +

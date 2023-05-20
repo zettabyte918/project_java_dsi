@@ -6,6 +6,7 @@ import com.projet.AppState;
 import com.projet.models.User;
 import com.projet.utils.Router;
 import com.projet.utils.OrangeSMS.OrangeSMS;
+import com.projet.worker.Worker;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,12 +46,16 @@ public class LoginController {
                 AppState.getInstance().setLoggedIn(true);
                 AppState.getInstance().setUser(currentUser);
                 currentUser.setConfirmationCode();
+
                 // send 2fa code
                 OrangeSMS.send2FaSMS(AppState.getInstance().getUser().getTel(), currentUser.getConfirmationCode());
 
                 System.out.println(currentUser.getConfirmationCode() + " confirmation code");
                 if (this.showConfirmationCodeDialog(currentUser, currentStage)) {
                     System.out.println("correct 2fa");
+                    // start worker
+                    Worker worker = new Worker();
+                    worker.startCheckingReminders();
                 } else {
                     System.out.println("incorrect 2fa");
                 }

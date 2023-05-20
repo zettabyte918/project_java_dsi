@@ -20,7 +20,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException, SQLException {
         // start background worker
-        // this.startWorkers(stage);
+        this.startWorkers(stage);
 
         // test database if ok otherwise show alert
         TestDBResponse res = Database.getInstance().TestConnection();
@@ -30,7 +30,7 @@ public class App extends Application {
             Database.getInstance().getDBConnection().close();
 
         } else {
-            Router.navigateTo(stage, "login");
+            Router.navigateTo(stage, "reminders");
         }
 
     }
