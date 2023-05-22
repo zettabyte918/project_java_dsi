@@ -9,14 +9,21 @@ import javafx.stage.Stage;
 
 public class Router {
 
-    public static <T> T navigateTo(Stage primaryStage, String page) {
+    public static <T> T navigateTo(Stage primaryStage, String page, Boolean newPage) {
         try {
             FXMLLoader loader = new FXMLLoader(App.class.getResource("views/" + page + ".fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root, 600, 400);
-            primaryStage.setScene(scene);
-            primaryStage.setResizable(false);
-            primaryStage.show();
+
+            if (newPage) {
+                Stage newStage = new Stage();
+                newStage.setScene(scene);
+                newStage.show();
+            } else {
+                primaryStage.setScene(scene);
+                primaryStage.setResizable(false);
+                primaryStage.show();
+            }
 
             return loader.getController();
         } catch (Exception e) {

@@ -29,7 +29,7 @@ public class RegisterController {
         try {
             // current login window
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Router.navigateTo(currentStage, "login");
+            Router.navigateTo(currentStage, "login", false);
             // currentStage.close();
 
         } catch (Exception e) {
@@ -51,7 +51,7 @@ public class RegisterController {
                         AlertType.INFORMATION);
 
                 // redirect to login page:
-                Router.navigateTo(currentStage, "login");
+                Router.navigateTo(currentStage, "login", false);
 
             } else {
                 this.showAlert("Register failed!", "User already exist!", AlertType.ERROR);

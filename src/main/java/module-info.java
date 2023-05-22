@@ -5,6 +5,7 @@ module com.projet {
     requires java.sql;
     requires okhttp3;
     requires com.google.gson;
+    requires com.jfoenix;
 
     opens com.projet to javafx.graphics, javafx.fxml;
     opens com.projet.controllers to javafx.graphics, javafx.fxml;

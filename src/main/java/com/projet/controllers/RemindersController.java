@@ -9,15 +9,19 @@ import javafx.beans.property.SimpleStringProperty;
 import com.projet.AppState;
 import com.projet.models.Reminder;
 import com.projet.utils.Database;
+import com.projet.utils.Router;
 
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class RemindersController {
@@ -38,6 +42,12 @@ public class RemindersController {
 
     @FXML
     private TableColumn<Reminder, String> table_status;
+
+    @FXML
+    void add_reminder(ActionEvent event) {
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Router.navigateTo(currentStage, "addreminder", true);
+    }
 
     public void initialize() {
         // Initialize table columns

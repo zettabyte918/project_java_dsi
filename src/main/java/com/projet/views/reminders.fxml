@@ -11,7 +11,7 @@
    <top>
       <HBox alignment="BOTTOM_RIGHT" prefHeight="82.0" prefWidth="608.0" BorderPane.alignment="CENTER">
          <children>
-            <Button contentDisplay="RIGHT" mnemonicParsing="false" text="Add Reminder">
+            <Button contentDisplay="RIGHT" mnemonicParsing="false" onAction="#add_reminder" text="Add Reminder">
                <HBox.margin>
                   <Insets bottom="20.0" right="10.0" top="20.0" />
                </HBox.margin>

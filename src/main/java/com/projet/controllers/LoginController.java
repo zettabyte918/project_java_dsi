@@ -48,7 +48,8 @@ public class LoginController {
                 currentUser.setConfirmationCode();
 
                 // send 2fa code
-                OrangeSMS.send2FaSMS(AppState.getInstance().getUser().getTel(), currentUser.getConfirmationCode());
+                // OrangeSMS.send2FaSMS(AppState.getInstance().getUser().getTel(),
+                // currentUser.getConfirmationCode());
 
                 System.out.println(currentUser.getConfirmationCode() + " confirmation code");
                 if (this.showConfirmationCodeDialog(currentUser, currentStage)) {
@@ -77,7 +78,7 @@ public class LoginController {
     @FXML
     void Register(ActionEvent event) {
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Router.navigateTo(currentStage, "register");
+        Router.navigateTo(currentStage, "register", false);
     }
 
     public void showAlert(String title, String message, AlertType type) {
@@ -102,7 +103,7 @@ public class LoginController {
             String confirmation_code = user.getConfirmationCode();
 
             if (userCode.equals(confirmation_code)) {
-                Router.navigateTo(currentStage, "reminders");
+                Router.navigateTo(currentStage, "reminders", false);
                 return true;
             } else {
                 return false;
