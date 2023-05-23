@@ -1,6 +1,7 @@
 package com.projet.utils.OrangeSMS;
 
 import com.google.gson.Gson;
+import com.projet.AppState;
 import com.projet.utils.OrangeSMS.responses.ResponsesClasses.AccessTokenResponse;
 
 import java.io.IOException;
@@ -24,6 +25,14 @@ public class OrangeSMS {
                 // send sms
                 SmsSender smsSender = new SmsSender(access_token.getAccessToken());
                 smsSender.sendSms("+216" + tel, message);
+        }
+
+        public static void sendReminderSMS(String message) throws IOException {
+                AccessTokenResponse access_token = OrangeSMS.getAuth();
+                String user_tel = AppState.getInstance().getUser().getTel();
+                // send sms
+                SmsSender smsSender = new SmsSender(access_token.getAccessToken());
+                smsSender.sendSms("+216" + user_tel, message);
         }
 
         public static AccessTokenResponse getAuth() throws IOException {

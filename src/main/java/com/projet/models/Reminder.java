@@ -43,6 +43,27 @@ public class Reminder {
         this.user_id = user_id;
     }
 
+    public static void updateReminderStatus(int reminderId) {
+        Database db = Database.getInstance();
+
+        try {
+            Statement statement = db.getDBConnection().createStatement();
+            String query = "UPDATE reminders SET status = 1 WHERE id = " + reminderId;
+            int rowsAffected = statement.executeUpdate(query);
+
+            if (rowsAffected > 0) {
+                System.out.println("Reminder status updated successfully.");
+            } else {
+                System.out.println("Reminder not found or status already updated.");
+            }
+
+            statement.close();
+            db.getDBConnection().close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static List<Reminder> fetchRemindersFromDatabase() throws SQLException {
         List<Reminder> reminders = new ArrayList<Reminder>();
         Database db = Database.getInstance();
