@@ -1,5 +1,14 @@
 package com.projet.models;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.projet.AppState;
+import com.projet.utils.Database;
+
 // import java.sql.ResultSet;
 
 public class Reminder {
@@ -32,6 +41,40 @@ public class Reminder {
         this.scheduled_time = scheduled_time;
         this.status = status;
         this.user_id = user_id;
+    }
+
+    public static List<Reminder> fetchRemindersFromDatabase() throws SQLException {
+        List<Reminder> reminders = new ArrayList<Reminder>();
+        Database db = Database.getInstance();
+        int userId = AppState.getInstance().getUser().getId();
+
+        // Connect to the database and retrieve data
+        try {
+
+            Statement statement = db.getDBConnection().createStatement();
+            String query = "SELECT * FROM reminders WHERE user_id = " + userId;
+            ResultSet resultSet = db.query(query);
+
+            while (resultSet.next()) {
+                int reminderId = resultSet.getInt("id");
+                String title = resultSet.getString("title");
+                String message = resultSet.getString("message");
+                String scheduledTime = resultSet.getString("scheduled_time");
+                int status = resultSet.getInt("status");
+                int user_id = resultSet.getInt("user_id");
+
+                Reminder reminder = new Reminder(reminderId, title, message, scheduledTime, status, user_id);
+                reminders.add(reminder);
+
+            }
+            resultSet.close();
+            statement.close();
+            db.getDBConnection().close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return reminders;
     }
 
     public int getId() {

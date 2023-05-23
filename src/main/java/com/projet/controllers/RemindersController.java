@@ -1,5 +1,6 @@
 package com.projet.controllers;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,9 +16,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
@@ -46,10 +50,78 @@ public class RemindersController {
     @FXML
     void add_reminder(ActionEvent event) {
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Router.navigateTo(currentStage, "addreminder", true);
+        Router.navigateTo(currentStage, "addreminder", false);
     }
 
     public void initialize() {
+        this.initTbale();
+        this.getAllReminders();
+
+        table.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && !table.getSelectionModel().isEmpty()) {
+                deleteSelectedRow();
+                table.refresh();
+            }
+        });
+    }
+
+    private void deleteSelectedRow() {
+        Reminder selectedReminder = table.getSelectionModel().getSelectedItem();
+        if (selectedReminder != null) {
+            Alert confirmationAlert = new Alert(AlertType.CONFIRMATION);
+            confirmationAlert.setTitle("Confirmation");
+            confirmationAlert.setHeaderText("Confirm Delete");
+            confirmationAlert.setContentText("Are you sure you want to delete this record?");
+
+            ButtonType confirmButton = new ButtonType("Delete");
+            ButtonType cancelButton = new ButtonType("Cancel");
+
+            confirmationAlert.getButtonTypes().setAll(confirmButton, cancelButton);
+
+            confirmationAlert.showAndWait().ifPresent(buttonType -> {
+                if (buttonType == confirmButton) {
+                    int selectedIndex = table.getSelectionModel().getSelectedIndex();
+                    table.getItems().remove(selectedIndex);
+
+                    deleteRecordFromDatabase(selectedReminder.getId());
+
+                    showDeleteConfirmationAlert();
+                }
+            });
+        }
+    }
+
+    private void showDeleteConfirmationAlert() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Delete Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Record deleted successfully!");
+        alert.showAndWait();
+    }
+
+    private void deleteRecordFromDatabase(int recordId) {
+        Database db = Database.getInstance();
+
+        try {
+            PreparedStatement statement = db.getDBConnection().prepareStatement("DELETE FROM reminders WHERE id = ?");
+            statement.setInt(1, recordId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle any potential database errors
+        }
+    }
+
+    public void getAllReminders() {
+        try {
+            List<Reminder> reminders = Reminder.fetchRemindersFromDatabase();
+            table.getItems().addAll(reminders);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initTbale() {
         // Initialize table columns
         table_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         table_title.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -84,48 +156,6 @@ public class RemindersController {
                 }
             };
         });
-
-        try {
-            List<Reminder> reminders = fetchDataFromDatabase();
-            table.getItems().addAll(reminders);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private List<Reminder> fetchDataFromDatabase() throws SQLException {
-        List<Reminder> reminders = new ArrayList<Reminder>();
-        Database db = Database.getInstance();
-        // int userId = AppState.getInstance().getUser().getId();
-        int userId = 2;
-
-        // Connect to the database and retrieve data
-        try {
-
-            Statement statement = db.getDBConnection().createStatement();
-            String query = "SELECT * FROM reminders WHERE user_id = " + userId;
-            ResultSet resultSet = db.query(query);
-
-            while (resultSet.next()) {
-                int reminderId = resultSet.getInt("id");
-                String title = resultSet.getString("title");
-                String message = resultSet.getString("message");
-                String scheduledTime = resultSet.getString("scheduled_time");
-                int status = resultSet.getInt("status");
-                int user_id = resultSet.getInt("user_id");
-
-                Reminder reminder = new Reminder(reminderId, title, message, scheduledTime, status, user_id);
-                reminders.add(reminder);
-
-            }
-            resultSet.close();
-            statement.close();
-            db.getDBConnection().close();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        System.out.println("all reminder is: " + reminders.size());
-        return reminders;
     }
 
 }

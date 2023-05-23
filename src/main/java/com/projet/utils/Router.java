@@ -13,7 +13,13 @@ public class Router {
         try {
             FXMLLoader loader = new FXMLLoader(App.class.getResource("views/" + page + ".fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 600, 400);
+            Scene scene;
+            if (page == "reminders") {
+                scene = new Scene(root, 800, 400);
+            } else {
+                scene = new Scene(root, 600, 400);
+
+            }
 
             if (newPage) {
                 Stage newStage = new Stage();
