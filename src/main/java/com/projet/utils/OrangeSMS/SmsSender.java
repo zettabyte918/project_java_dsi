@@ -37,7 +37,6 @@ public class SmsSender {
                 .build();
 
         // Send the request and handle the response
-        Response response = client.newCall(request).execute();
-        System.out.println(response.body().string());
+        client.newCall(request).execute();
     }
 }

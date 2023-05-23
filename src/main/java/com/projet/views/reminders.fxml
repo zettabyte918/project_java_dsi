@@ -7,11 +7,16 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projet.controllers.RemindersController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projet.controllers.RemindersController">
    <top>
-      <HBox alignment="BOTTOM_RIGHT" prefHeight="82.0" prefWidth="608.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_RIGHT" prefHeight="82.0" prefWidth="608.0" BorderPane.alignment="CENTER">
          <children>
-            <Button contentDisplay="RIGHT" mnemonicParsing="false" onAction="#add_reminder" text="Add Reminder">
+            <Button fx:id="update_btn" alignment="CENTER" mnemonicParsing="false" text="Update">
+               <HBox.margin>
+                  <Insets right="523.0" />
+               </HBox.margin>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#add_reminder" prefWidth="181.0" text="Add Reminder">
                <HBox.margin>
                   <Insets bottom="20.0" right="10.0" top="20.0" />
                </HBox.margin>

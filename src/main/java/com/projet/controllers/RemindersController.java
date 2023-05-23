@@ -1,5 +1,6 @@
 package com.projet.controllers;
 
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -48,6 +50,9 @@ public class RemindersController {
     private TableColumn<Reminder, String> table_status;
 
     @FXML
+    private Button update_btn;
+
+    @FXML
     void add_reminder(ActionEvent event) {
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Router.navigateTo(currentStage, "addreminder", false);
@@ -63,6 +68,27 @@ public class RemindersController {
                 table.refresh();
             }
         });
+
+        update_btn.setOnAction(event -> {
+            // current login window
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            Reminder selectedReminder = table.getSelectionModel().getSelectedItem();
+            if (selectedReminder != null) {
+                System.out.println("Update clicked");
+                openUpdatePage(currentStage, selectedReminder);
+
+            } else {
+                // Show an error message or handle the case when no row is selected
+            }
+        });
+
+    }
+
+    private void openUpdatePage(Stage currentStage, Reminder reminder) {
+        UpdateReminderController controller = Router.navigateTo(currentStage, "updatereminder", false);
+        controller.setReminder(reminder);
+
     }
 
     private void deleteSelectedRow() {
