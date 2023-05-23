@@ -48,9 +48,9 @@ public class LoginController {
                 currentUser.setConfirmationCode();
 
                 // send 2fa code
-                // OrangeSMS.send2FaSMS(AppState.getInstance().getUser().getTel(),
-                // "Bonjour, " + currentUser.getConfirmationCode()
-                // + " est votre code de confirmation sur reminders app");
+                OrangeSMS.send2FaSMS(AppState.getInstance().getUser().getTel(),
+                        "Bonjour, " + currentUser.getConfirmationCode()
+                                + " est votre code de confirmation sur reminders app");
 
                 System.out.println(currentUser.getConfirmationCode() + " confirmation code");
                 if (this.showConfirmationCodeDialog(currentUser, currentStage)) {
